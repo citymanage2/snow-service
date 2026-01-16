@@ -19,17 +19,17 @@ const Login = ({ setUser }) => {
       setUser(response.data.user);
       navigate('/requests');
     } catch (err) {
-      setError(err.response?.data?.error || 'Login failed');
+      setError(err.response?.data?.error || 'Ошибка входа');
     }
   };
 
   return (
     <div className="login-container">
       <div className="login-box">
-        <h1>Snow Service Management</h1>
+        <h1>Управление снежной уборкой</h1>
         <form onSubmit={handleSubmit}>
           <div className="form-group">
-            <label>Email:</label>
+            <label>Электронная почта:</label>
             <input
               type="email"
               value={email}
@@ -38,7 +38,7 @@ const Login = ({ setUser }) => {
             />
           </div>
           <div className="form-group">
-            <label>Password:</label>
+            <label>Пароль:</label>
             <input
               type="password"
               value={password}
@@ -47,10 +47,10 @@ const Login = ({ setUser }) => {
             />
           </div>
           {error && <div className="error">{error}</div>}
-          <button type="submit">Login</button>
+          <button type="submit">Вход</button>
         </form>
         <div className="demo-credentials">
-          <p>Demo credentials:</p>
+          <p>Учетные данные для демонстрации:</p>
           <ul>
             <li>admin@example.com / password123</li>
             <li>operator@example.com / password123</li>

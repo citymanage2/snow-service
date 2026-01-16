@@ -20,7 +20,7 @@ const Requests = ({ user }) => {
       const response = await getCities();
       setCities(response.data);
     } catch (error) {
-      console.error('Error fetching cities:', error);
+      console.error('Ошибка при загрузке городов:', error);
     }
   };
 
@@ -30,7 +30,7 @@ const Requests = ({ user }) => {
       const response = await getRequests(city);
       setRequests(response.data);
     } catch (error) {
-      console.error('Error fetching requests:', error);
+      console.error('Ошибка при загрузке заявок:', error);
     } finally {
       setLoading(false);
     }
@@ -59,10 +59,10 @@ const Requests = ({ user }) => {
 
   const getStatusLabel = (status) => {
     switch (status) {
-      case 'new': return 'New';
-      case 'in_progress': return 'In Progress';
-      case 'completed': return 'Completed';
-      case 'cancelled': return 'Cancelled';
+      case 'new': return 'Новая';
+      case 'in_progress': return 'В работе';
+      case 'completed': return 'Выполнена';
+      case 'cancelled': return 'Отменена';
       default: return status;
     }
   };
@@ -70,18 +70,18 @@ const Requests = ({ user }) => {
   return (
     <div className="requests-container">
       <header className="header">
-        <h1>Snow Service Requests</h1>
+        <h1>Заявки на снежную уборку</h1>
         <div className="user-info">
           <span>{user.name} ({user.role})</span>
-          <button onClick={handleLogout} className="logout-btn">Logout</button>
+          <button onClick={handleLogout} className="logout-btn">Выход</button>
         </div>
       </header>
 
       <div className="filters">
         <label>
-          Filter by city:
+          Фильтр по городу:
           <select value={selectedCity} onChange={handleCityChange}>
-            <option value="">All Cities</option>
+            <option value="">Все города</option>
             {cities.map(city => (
               <option key={city} value={city}>{city}</option>
             ))}
@@ -90,31 +90,31 @@ const Requests = ({ user }) => {
       </div>
 
       {loading ? (
-        <div className="loading">Loading...</div>
+        <div className="loading">Загрузка...</div>
       ) : (
         <div className="requests-grid">
           {requests.length === 0 ? (
-            <div className="no-requests">No requests found</div>
+            <div className="no-requests">Заявок не найдено</div>
           ) : (
             requests.map(request => (
               <div key={request.id} className="request-card">
                 <div className="request-header">
-                  <h3>Request #{request.id}</h3>
+                  <h3>Заявка №{request.id}</h3>
                   <span className={`status ${getStatusClass(request.status)}`}>
                     {getStatusLabel(request.status)}
                   </span>
                 </div>
                 <div className="request-body">
-                  <p><strong>Organization:</strong> {request.organization_name}</p>
-                  <p><strong>City:</strong> {request.city}</p>
-                  <p><strong>Address:</strong> {request.address}</p>
-                  <p><strong>Work Type:</strong> {request.work_type}</p>
-                  <p><strong>Volume:</strong> {request.volume} m³</p>
+                  <p><strong>Организация:</strong> {request.organization_name}</p>
+                  <p><strong>Город:</strong> {request.city}</p>
+                  <p><strong>Адрес:</strong> {request.address}</p>
+                  <p><strong>Тип работ:</strong> {request.work_type}</p>
+                  <p><strong>Объем:</strong> {request.volume} м³</p>
                   {request.operator_name && (
-                    <p><strong>Operator:</strong> {request.operator_name}</p>
+                    <p><strong>Оператор:</strong> {request.operator_name}</p>
                   )}
                   <p className="created-at">
-                    Created: {new Date(request.created_at).toLocaleString()}
+                    Создано: {new Date(request.created_at).toLocaleString()}
                   </p>
                 </div>
               </div>
